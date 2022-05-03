@@ -1,3 +1,3 @@
 # finance-webapp-api
 
-## FINANCE
+# FINANCE
