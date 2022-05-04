@@ -17,4 +17,8 @@ public class EntriesService {
     public List<EntriesDTO> getEntries() {
         return entriesRepository.findAll().stream().map(EntriesDTO::create).collect(Collectors.toList());
     };
+
+    public EntriesDTO insert(Entries entries) {
+        return EntriesDTO.create(entriesRepository.save(entries));
+    }
 }
