@@ -51,4 +51,26 @@ public class EntriesService {
             return false;
         }
     }
+
+    public EntriesDTO patch(Long id, Entries entries) {
+        Assert.notNull(id, "Unable to update the data");
+
+        Optional<Entries> optional = entriesRepository.findById(id);
+        if(optional.isPresent()) {
+            Entries db = optional.get();
+
+            if(entries.getValue() != null) {
+                db.setValue(entries.getValue());
+            }
+
+            if(entries.getName() != null) {
+                db.setName(entries.getName());
+            }
+
+            entriesRepository.save(db);
+            return EntriesDTO.create(db);
+        } else {
+            throw new RuntimeException("Unable to update the data");
+        }
+    }
 }

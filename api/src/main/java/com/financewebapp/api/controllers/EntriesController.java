@@ -44,4 +44,11 @@ public class EntriesController {
 
         return success ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity patch(@PathVariable("id") Long id, @RequestBody Entries entries) {
+        EntriesDTO e = service.patch(id, entries);
+
+        return e != null ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
+    }
 }
