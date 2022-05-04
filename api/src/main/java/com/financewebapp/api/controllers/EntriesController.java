@@ -3,12 +3,10 @@ package com.financewebapp.api.controllers;
 import com.financewebapp.api.dto.EntriesDTO;
 import com.financewebapp.api.model.Entries;
 import com.financewebapp.api.service.EntriesService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -30,5 +28,20 @@ public class EntriesController {
         } catch(Exception e) {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity put(@PathVariable("id") Long id, @RequestBody Entries entries) {
+        entries.setId(id);
+        EntriesDTO e = service.update(entries, id);
+
+        return e != null ? ResponseEntity.ok(e) : ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable("id") Long id) {
+        boolean success = service.delete(id);
+
+        return success ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
 }
