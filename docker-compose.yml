@@ -1,5 +1,13 @@
 version: '3.3'
 services:
+  api: 
+    build: .
+    restart: always
+    ports:
+      # <Port exposed> : < MySQL Port running inside container>
+      - '8080:8080'
+    expose:
+      - '8080'
   db:
     image: mysql:latest
     restart: always
@@ -13,7 +21,7 @@ services:
       MYSQL_ROOT_PASSWORD: my-secret-pw
     ports:
       # <Port exposed> : < MySQL Port running inside container>
-      - '3306:3306'
+      - '3333:3306'
     expose:
       # Opens port 3306 on the container
       - '3306'
