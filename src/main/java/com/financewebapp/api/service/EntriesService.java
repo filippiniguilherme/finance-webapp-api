@@ -7,6 +7,7 @@ import org.modelmapper.internal.util.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -43,13 +44,8 @@ public class EntriesService {
         }
     }
 
-    public boolean delete(Long id) {
-        if(entriesRepository.findById(id).map(EntriesDTO::create).isPresent()) {
-            entriesRepository.deleteById(id);
-            return true;
-        } else {
-            return false;
-        }
+    public void delete(Long id) {
+        entriesRepository.deleteById(id);
     }
 
     public EntriesDTO patch(Long id, Entries entries) {

@@ -22,12 +22,8 @@ public class EntriesController {
 
     @PostMapping
     public ResponseEntity post(@RequestBody Entries entries) {
-        try{
-            EntriesDTO e = service.insert(entries);
-            return ResponseEntity.created(null).build();
-        } catch(Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+        EntriesDTO e = service.insert(entries);
+        return ResponseEntity.created(null).build();
     }
 
     @PutMapping("/{id}")
@@ -40,9 +36,8 @@ public class EntriesController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable("id") Long id) {
-        boolean success = service.delete(id);
-
-        return success ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
+        service.delete(id);
+        return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/{id}")
