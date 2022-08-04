@@ -1,8 +1,8 @@
 package com.financewebapp.api.controllers;
 
-import com.financewebapp.api.dto.EntriesDTO;
-import com.financewebapp.api.model.Entries;
-import com.financewebapp.api.service.EntriesService;
+import com.financewebapp.api.dto.EntryDTO;
+import com.financewebapp.api.model.Entry;
+import com.financewebapp.api.service.EntryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,26 +10,26 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/entries")
-public class EntriesController {
+@RequestMapping("/api/v1/entry")
+public class EntryController {
     @Autowired
-    private EntriesService service;
+    private EntryService service;
 
-    @GetMapping
-    public ResponseEntity<List<EntriesDTO>> getEntries() {
+    @GetMapping("/list")
+    public ResponseEntity<List<EntryDTO>> getEntries() {
         return ResponseEntity.ok(service.getEntries());
     }
 
     @PostMapping
-    public ResponseEntity post(@RequestBody Entries entries) {
-        EntriesDTO e = service.insert(entries);
+    public ResponseEntity post(@RequestBody Entry entry) {
+        EntryDTO e = service.insert(entry);
         return ResponseEntity.created(null).build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity put(@PathVariable("id") Long id, @RequestBody Entries entries) {
-        entries.setId(id);
-        EntriesDTO e = service.update(entries, id);
+    public ResponseEntity put(@PathVariable("id") Long id, @RequestBody Entry entry) {
+        entry.setId(id);
+        EntryDTO e = service.update(entry, id);
 
         return e != null ? ResponseEntity.ok(e) : ResponseEntity.notFound().build();
     }
@@ -41,8 +41,8 @@ public class EntriesController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity patch(@PathVariable("id") Long id, @RequestBody Entries entries) {
-        EntriesDTO e = service.patch(id, entries);
+    public ResponseEntity patch(@PathVariable("id") Long id, @RequestBody Entry entry) {
+        EntryDTO e = service.patch(id, entry);
 
         return e != null ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
