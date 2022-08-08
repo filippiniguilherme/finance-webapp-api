@@ -26,7 +26,7 @@ public class DebitController {
     }
 
     @PostMapping
-    public ResponseEntity insertDebit(@RequestBody Debit debit) {
+    public ResponseEntity<DebitDTO> insertDebit(@RequestBody Debit debit) {
         DebitDTO debitDto = debitService.insert(debit);
         return ResponseEntity.created(null).build();
     }

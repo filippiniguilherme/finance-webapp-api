@@ -31,10 +31,10 @@ public class EntryService {
         if(optional.isPresent()){
             Entry db = optional.get();
 
-            db.setName(entry.getName());
-            db.setValue(entry.getValue());
+            db.setEntryName(entry.getEntryName());
+            db.setEntryValue(entry.getEntryValue());
 
-            System.out.println("Entry id: " + db.getId());
+            System.out.println("Entry id: " + db.getEntryId());
 
             entryRepository.save(db);
             return EntryDTO.create(db);
@@ -54,12 +54,12 @@ public class EntryService {
         if(optional.isPresent()) {
             Entry db = optional.get();
 
-            if(entry.getValue() != null) {
-                db.setValue(entry.getValue());
+            if(entry.getEntryValue() != null) {
+                db.setEntryValue(entry.getEntryValue());
             }
 
-            if(entry.getName() != null) {
-                db.setName(entry.getName());
+            if(entry.getEntryName() != null) {
+                db.setEntryName(entry.getEntryName());
             }
 
             entryRepository.save(db);

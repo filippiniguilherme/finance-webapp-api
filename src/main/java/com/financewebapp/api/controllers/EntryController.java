@@ -21,27 +21,27 @@ public class EntryController {
     }
 
     @PostMapping
-    public ResponseEntity post(@RequestBody Entry entry) {
+    public ResponseEntity<EntryDTO> post(@RequestBody Entry entry) {
         EntryDTO e = service.insert(entry);
         return ResponseEntity.created(null).build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity put(@PathVariable("id") Long id, @RequestBody Entry entry) {
-        entry.setId(id);
+    public ResponseEntity<EntryDTO> put(@PathVariable("id") Long id, @RequestBody Entry entry) {
+        entry.setEntryId(id);
         EntryDTO e = service.update(entry, id);
 
         return e != null ? ResponseEntity.ok(e) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable("id") Long id) {
+    public ResponseEntity<EntryDTO> delete(@PathVariable("id") Long id) {
         service.delete(id);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity patch(@PathVariable("id") Long id, @RequestBody Entry entry) {
+    public ResponseEntity<EntryDTO> patch(@PathVariable("id") Long id, @RequestBody Entry entry) {
         EntryDTO e = service.patch(id, entry);
 
         return e != null ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
