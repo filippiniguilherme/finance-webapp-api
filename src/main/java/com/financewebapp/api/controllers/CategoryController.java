@@ -20,9 +20,9 @@ public class CategoryController {
     private static final Logger LOG = LoggerFactory.getLogger(CategoryController.class);
 
     @GetMapping("/list")
-    public ResponseEntity<List<CategoryDTO>> getCategorys() {
+    public ResponseEntity<List<CategoryDTO>> getCategories() {
         LOG.info("Getting List of Category");
-        return ResponseEntity.ok(service.getCategorys());
+        return ResponseEntity.ok(service.getCategories());
     }
 
     @PostMapping

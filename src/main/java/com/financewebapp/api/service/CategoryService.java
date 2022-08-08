@@ -19,7 +19,8 @@ public class CategoryService {
     private CategoryRepository categoryRepository;
     private static final Logger LOG = LoggerFactory.getLogger(CategoryRepository.class);
 
-    public List<CategoryDTO> getCategorys() {
+    public List<CategoryDTO> getCategories() {
+        LOG.info("List Categories");
         return categoryRepository.findAll().stream().map(CategoryDTO::create).collect(Collectors.toList());
     };
 
@@ -37,7 +38,7 @@ public class CategoryService {
 
             db.setCategoryName(category.getCategoryName());
 
-            LOG.info("Category id: {}", db.getCategoryId());
+            LOG.info("Update Category: {}", db.getCategoryId());
 
             categoryRepository.save(db);
             return CategoryDTO.create(db);
@@ -47,6 +48,7 @@ public class CategoryService {
     }
 
     public void delete(Long id) {
+        LOG.info("Delete Category: {}", id);
         categoryRepository.deleteById(id);
     }
 }

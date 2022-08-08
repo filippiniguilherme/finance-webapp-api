@@ -20,6 +20,7 @@ public class AuthorService {
     private static final Logger LOG = LoggerFactory.getLogger(AuthorRepository.class);
 
     public List<AuthorDTO> getAuthors() {
+        LOG.info("List Authors");
         return authorRepository.findAll().stream().map(AuthorDTO::create).collect(Collectors.toList());
     };
 
@@ -37,7 +38,7 @@ public class AuthorService {
 
             db.setAuthorName(author.getAuthorName());
 
-            System.out.println("Author id: " + db.getAuthorId());
+            LOG.info("Update Author: {}", db.getAuthorId());
 
             authorRepository.save(db);
             return AuthorDTO.create(db);
@@ -47,6 +48,7 @@ public class AuthorService {
     }
 
     public void delete(Long id) {
+        LOG.info("Delete Author: {}", id);
         authorRepository.deleteById(id);
     }
 }
