@@ -23,7 +23,8 @@ public class EntryController {
     @PostMapping
     public ResponseEntity<EntryDTO> post(@RequestBody Entry entry) {
         EntryDTO e = service.insert(entry);
-        return ResponseEntity.created(null).build();
+
+        return e != null ? ResponseEntity.created(null).build() : ResponseEntity.notFound().build();
     }
 
     @PutMapping("/{id}")
@@ -31,7 +32,7 @@ public class EntryController {
         entry.setEntryId(id);
         EntryDTO e = service.update(entry, id);
 
-        return e != null ? ResponseEntity.ok(e) : ResponseEntity.notFound().build();
+        return e != null ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")

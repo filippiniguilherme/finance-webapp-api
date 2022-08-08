@@ -29,7 +29,8 @@ public class AuthorController {
     public ResponseEntity<AuthorDTO> post(@RequestBody Author author) {
         LOG.info("Posting item of Author");
         AuthorDTO e = service.insert(author);
-        return ResponseEntity.created(null).build();
+
+        return e != null ? ResponseEntity.created(null).build() : ResponseEntity.notFound().build();
     }
 
     @PutMapping("/{id}")
@@ -38,7 +39,7 @@ public class AuthorController {
         author.setAuthorId(id);
         AuthorDTO e = service.update(author, id);
 
-        return e != null ? ResponseEntity.ok(e) : ResponseEntity.notFound().build();
+        return e != null ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")

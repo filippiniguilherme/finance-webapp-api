@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-import org.hibernate.dialect.TimesTenDialect;
 import org.hibernate.type.TimestampType;
 
 @Entity(name = "Debits")
