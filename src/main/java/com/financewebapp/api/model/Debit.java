@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+
 import javax.persistence.*;
 
-import org.hibernate.type.TimestampType;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity(name = "Debits")
 @NoArgsConstructor
@@ -21,17 +23,21 @@ public class Debit {
     @Column(name = "DebitName")
     private String DebitName;
 
-    @Column(name = "DebitDate")
-    private TimestampType DebitDate;
-
     @Column(name = "DebitValue")
     private Double DebitValue;
 
+    @CreationTimestamp
+    @Column(name = "DebitDate")
+    private Timestamp DebitDate;
+
+    @Column(name = "DebitMonth")
+    private Integer DebitMonth;
+
+    @Column(name = "DebitYear")
+    private Integer DebitYear;
+
     @Column(name = "AuthorId")
     private Long AuthorId;
-
-    @Column(name = "TypeId")
-    private Long TypeId;
 
     @Column(name = "CategoryId")
     private Long CategoryId;

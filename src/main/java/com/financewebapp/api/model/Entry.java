@@ -4,7 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+
 import javax.persistence.*;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity(name = "Entries")
 @NoArgsConstructor
@@ -20,6 +24,16 @@ public class Entry {
 
     @Column(name = "EntryValue")
     private Float EntryValue;
+
+    @CreationTimestamp
+    @Column(name = "EntryDate")
+    private Timestamp EntryDate;
+
+    @Column(name = "EntryMonth")
+    private Integer EntryMonth;
+
+    @Column(name = "EntryYear")
+    private Integer EntryYear;
 
     @Column(name = "AuthorId")
     private Long AuthorId;

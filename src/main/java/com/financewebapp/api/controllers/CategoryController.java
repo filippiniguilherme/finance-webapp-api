@@ -27,7 +27,7 @@ public class CategoryController {
 
     @PostMapping
     public ResponseEntity<CategoryDTO> post(@RequestBody Category category) {
-        LOG.info("Posting item of Author");
+        LOG.info("Posting item of Category");
         CategoryDTO e = service.insert(category);
 
         return e != null ? ResponseEntity.created(null).build() : ResponseEntity.notFound().build();

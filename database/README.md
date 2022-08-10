@@ -9,14 +9,6 @@ CREATE TABLE Authors (
 );
 ```
 
-### Table Tipos
-```sql
-CREATE TABLE Tipos (
-	TypeId int Primary Key not null auto_increment,
-	TypeName varchar(80)
-);
-```
-
 ### Table Categories
 ```sql
 CREATE TABLE Categories (
@@ -32,11 +24,11 @@ CREATE TABLE Entries (
 	EntryName varchar(80),
 	EntryDate timestamp not null,
 	EntryValue float not null,
+	EntryMonth int,
+	EntryYear int,
 	AuthorId int,
-	TypeId int,
 	CategoryId int,
 	FOREIGN KEY (AuthorId) REFERENCES Authors(AuthorId),
-	FOREIGN KEY (TypeId) REFERENCES Tipos(TypeId),
 	FOREIGN KEY (CategoryId) REFERENCES Categories(CategoryId)
 );
 ```
@@ -48,11 +40,11 @@ CREATE TABLE Debits (
 	DebitName varchar(80),
 	DebitDate timestamp not null,
 	DebitValue float not null,
+	DebitMonth int,
+	DebitYear int,
 	AuthorId int,
-	TypeId int,
 	CategoryId int,
 	FOREIGN KEY (AuthorId) REFERENCES Authors(AuthorId),
-	FOREIGN KEY (TypeId) REFERENCES Tipos(TypeId),
 	FOREIGN KEY (CategoryId) REFERENCES Categories(CategoryId)
 );
 ```
