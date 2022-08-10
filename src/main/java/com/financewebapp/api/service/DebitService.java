@@ -27,6 +27,12 @@ public class DebitService {
         return debitRepository.findAll().stream().map(DebitDTO::create).collect(Collectors.toList());
     };
 
+    public List<Debit> getDebitsByMonthAndYear(Integer month, Integer year) {
+        LOG.info("List Debits By Month {} And Year {}", month, year);
+
+        return debitRepository.findByDebitMonthAndDebitYear(month, year);
+    };
+
     public DebitDTO insert(Debit debit) {
         LOG.info("Insert Debit: {}", debit);
         return DebitDTO.create(debitRepository.save(debit));

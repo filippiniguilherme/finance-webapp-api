@@ -18,23 +18,23 @@ public class Debit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long DebitId;
+    private Long debitId;
 
     @Column(name = "DebitName")
-    private String DebitName;
+    private String debitName;
 
     @Column(name = "DebitValue")
-    private Double DebitValue;
+    private Double debitValue;
 
     @CreationTimestamp
     @Column(name = "DebitDate")
-    private Timestamp DebitDate;
+    private Timestamp debitDate;
 
     @Column(name = "DebitMonth")
-    private Integer DebitMonth;
+    private Integer debitMonth;
 
     @Column(name = "DebitYear")
-    private Integer DebitYear;
+    private Integer debitYear;
 
     @Column(name = "AuthorId")
     private Long AuthorId;

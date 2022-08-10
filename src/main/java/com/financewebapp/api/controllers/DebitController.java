@@ -34,6 +34,12 @@ public class DebitController {
         return ResponseEntity.ok(debitService.getDebits());
     }
 
+    @GetMapping("/{month}/{year}")
+    public ResponseEntity<List<Debit>> getDebitsByMonthAndYear(@PathVariable("month") Integer month, @PathVariable("year") Integer year) {
+        LOG.info("Getting List of Debit By Month And Year");
+        return ResponseEntity.ok(debitService.getDebitsByMonthAndYear(month, year));
+    }
+
     @PostMapping
     public ResponseEntity<DebitDTO> post(@RequestBody Debit debit) {
         LOG.info("Posting item of Debit");

@@ -16,19 +16,25 @@ import java.util.List;
 @RequestMapping("/api/v1/entry")
 public class EntryController {
     @Autowired
-    private EntryService service;
+    private EntryService entryService;
     private static final Logger LOG = LoggerFactory.getLogger(CategoryController.class);
 
     @GetMapping("/list")
     public ResponseEntity<List<EntryDTO>> getEntries() {
         LOG.info("Getting List of Entry");
-        return ResponseEntity.ok(service.getEntries());
+        return ResponseEntity.ok(entryService.getEntries());
+    }
+
+    @GetMapping("/{month}/{year}")
+    public ResponseEntity<List<Entry>> getEntrysByMonthAndYear(@PathVariable("month") Integer month, @PathVariable("year") Integer year) {
+        LOG.info("Getting List of Entry By Month And Year");
+        return ResponseEntity.ok(entryService.getEntriesByMonthAndYear(month, year));
     }
 
     @PostMapping
     public ResponseEntity<EntryDTO> post(@RequestBody Entry entry) {
         LOG.info("Posting item of Entry");
-        EntryDTO e = service.insert(entry);
+        EntryDTO e = entryService.insert(entry);
 
         return e != null ? ResponseEntity.created(null).build() : ResponseEntity.notFound().build();
     }
@@ -37,7 +43,7 @@ public class EntryController {
     public ResponseEntity<EntryDTO> put(@PathVariable("id") Long id, @RequestBody Entry entry) {
         LOG.info("Puting item of Entry");
         entry.setEntryId(id);
-        EntryDTO e = service.update(entry, id);
+        EntryDTO e = entryService.update(entry, id);
 
         return e != null ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
@@ -45,14 +51,14 @@ public class EntryController {
     @DeleteMapping("/{id}")
     public ResponseEntity<EntryDTO> delete(@PathVariable("id") Long id) {
         LOG.info("Deleting item of Entry");
-        service.delete(id);
+        entryService.delete(id);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<EntryDTO> patch(@PathVariable("id") Long id, @RequestBody Entry entry) {
         LOG.info("Patching item of Entry");
-        EntryDTO e = service.patch(id, entry);
+        EntryDTO e = entryService.patch(id, entry);
 
         return e != null ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }

@@ -24,6 +24,12 @@ public class EntryService {
         return entryRepository.findAll().stream().map(EntryDTO::create).collect(Collectors.toList());
     };
 
+    public List<Entry> getEntriesByMonthAndYear(Integer month, Integer year) {
+        LOG.info("List Entries By Month {} And Year {}", month, year);
+
+        return entryRepository.findByEntryMonthAndEntryYear(month, year);
+    };
+
     public EntryDTO insert(Entry entry) {
         LOG.info("Insert Entry: {}", entry);
         return EntryDTO.create(entryRepository.save(entry));

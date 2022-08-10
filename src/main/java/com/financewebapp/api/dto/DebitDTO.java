@@ -9,13 +9,13 @@ import org.modelmapper.ModelMapper;
 
 @Data
 public class DebitDTO {
-    private Long DebitId;
+    private Long debitId;
 
-    private String DebitName;
-    private Timestamp DebitDate;
-    private Float DebitValue;
-    private Integer DebitMonth;
-    private Integer DebitYear;
+    private String debitName;
+    private Timestamp debitDate;
+    private Float debitValue;
+    private Integer debitMonth;
+    private Integer debitYear;
     private Long AuthorId;
     private Long CategoryId;
     

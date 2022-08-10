@@ -17,23 +17,23 @@ import org.hibernate.annotations.CreationTimestamp;
 public class Entry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long EntryId;
+    private Long entryId;
 
     @Column(name = "EntryName")
-    private String EntryName;
+    private String entryName;
 
     @Column(name = "EntryValue")
-    private Float EntryValue;
+    private Float entryValue;
 
     @CreationTimestamp
     @Column(name = "EntryDate")
-    private Timestamp EntryDate;
+    private Timestamp entryDate;
 
     @Column(name = "EntryMonth")
-    private Integer EntryMonth;
+    private Integer entryMonth;
 
     @Column(name = "EntryYear")
-    private Integer EntryYear;
+    private Integer entryYear;
 
     @Column(name = "AuthorId")
     private Long AuthorId;

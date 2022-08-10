@@ -11,14 +11,14 @@ public class ExceptionConfig {
     @ExceptionHandler({
             EmptyResultDataAccessException.class
     })
-    public ResponseEntity errorNotFound(Exception e) {
+    public ResponseEntity<String> errorNotFound(Exception e) {
         return ResponseEntity.notFound().build();
     }
 
     @ExceptionHandler({
             IllegalArgumentException.class
     })
-    public ResponseEntity errorBadRequest(Exception e) {
+    public ResponseEntity<String> errorBadRequest(Exception e) {
         return ResponseEntity.badRequest().build();
     }
 }
