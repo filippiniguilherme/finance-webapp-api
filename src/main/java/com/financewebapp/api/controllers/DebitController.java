@@ -4,9 +4,13 @@ import com.financewebapp.api.dto.DebitDTO;
 import com.financewebapp.api.model.Debit;
 import com.financewebapp.api.service.DebitService;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @RestController
@@ -29,46 +34,88 @@ public class DebitController {
     private static final Logger LOG = LoggerFactory.getLogger(CategoryController.class);
 
     @GetMapping("/list")
-    public ResponseEntity<List<DebitDTO>> getDebits() {
-        LOG.info("Getting List of Debit");
+    @ApiOperation("Get list of debits.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieve list of debits."),
+            @ApiResponse(code = 400, message = "Bad Request. Please check response body for further details."),
+            @ApiResponse(code = 404, message = "Debits not found."),
+            @ApiResponse(code = 500, message = "Internal Server Error. Please check response body for further details.")
+    })
+    public ResponseEntity<List<DebitDTO>> getDebits() throws EntityNotFoundException {
+        LOG.info("Getting debits list.");
         return ResponseEntity.ok(debitService.getDebits());
     }
 
     @GetMapping("/{month}/{year}")
-    public ResponseEntity<List<Debit>> getDebitsByMonthAndYear(@PathVariable("month") Integer month, @PathVariable("year") Integer year) {
+    @ApiOperation("Get list of debits by month and year.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieve list of debits for given month and year."),
+            @ApiResponse(code = 400, message = "Bad Request. Please check response body for further details."),
+            @ApiResponse(code = 404, message = "Debits not found."),
+            @ApiResponse(code = 500, message = "Internal Server Error. Please check response body for further details.")
+    })
+    public ResponseEntity<List<Debit>> getDebitsByMonthAndYear(@PathVariable("month") Integer month, @PathVariable("year") Integer year) throws EntityNotFoundException {
         LOG.info("Getting List of Debit By Month And Year");
         return ResponseEntity.ok(debitService.getDebitsByMonthAndYear(month, year));
     }
 
     @PostMapping
-    public ResponseEntity<DebitDTO> post(@RequestBody Debit debit) {
+    @ApiOperation("Save new debit item.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully save debit"),
+            @ApiResponse(code = 400, message = "Bad Request. Please check response body for further details."),
+            @ApiResponse(code = 404, message = "Could not be saved."),
+            @ApiResponse(code = 500, message = "Internal Server Error. Please check response body for further details.")
+    })
+    public ResponseEntity<String> post(@RequestBody Debit debit) throws EntityNotFoundException, IllegalArgumentException {
         LOG.info("Posting item of Debit");
         DebitDTO e = debitService.insert(debit);
 
-        return e != null ? ResponseEntity.created(null).build() : ResponseEntity.notFound().build();
+        return e != null ? new ResponseEntity<>("Successfully save debit.", HttpStatus.OK) : ResponseEntity.notFound().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DebitDTO> put(@PathVariable("id") Long id, @RequestBody Debit debit) {
-        LOG.info("Puting item of Debit");
+    @ApiOperation("Update debit by ID.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully update debit."),
+            @ApiResponse(code = 400, message = "Bad Request. Please check response body for further details."),
+            @ApiResponse(code = 404, message = "Debit not found."),
+            @ApiResponse(code = 500, message = "Internal Server Error. Please check response body for further details.")
+    })
+    public ResponseEntity<String> put(@PathVariable("id") Long id, @RequestBody Debit debit) throws EntityNotFoundException, IllegalArgumentException {
+        LOG.info("Updating debit item.");
         debit.setDebitId(id);
         DebitDTO e = debitService.update(debit, id);
 
-        return e != null ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
+        return e != null ? new ResponseEntity<>("Successfully update debit.", HttpStatus.OK) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<DebitDTO> delete(@PathVariable("id") Long id) {
+    @ApiOperation("Delete debit by ID.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully delete debit."),
+            @ApiResponse(code = 400, message = "Bad Request. Please check response body for further details."),
+            @ApiResponse(code = 404, message = "Debit not found."),
+            @ApiResponse(code = 500, message = "Internal Server Error. Please check response body for further details.")
+    })
+    public ResponseEntity<DebitDTO> delete(@PathVariable("id") Long id) throws EntityNotFoundException, IllegalArgumentException {
         LOG.info("Deleting item of Debit");
         debitService.delete(id);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<DebitDTO> patch(@PathVariable("id") Long id, @RequestBody Debit debit) {
+    @ApiOperation("Partial update debit by ID.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully update debit partially."),
+            @ApiResponse(code = 400, message = "Bad Request. Please check response body for further details."),
+            @ApiResponse(code = 404, message = "Debit not found."),
+            @ApiResponse(code = 500, message = "Internal Server Error. Please check response body for further details.")
+    })
+    public ResponseEntity<String> patch(@PathVariable("id") Long id, @RequestBody Debit debit) throws EntityNotFoundException, IllegalArgumentException {
         LOG.info("Patching item of Debit");
         DebitDTO e = debitService.patch(id, debit);
 
-        return e != null ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
+        return e != null ? new ResponseEntity<>("Successfully update debit partially.", HttpStatus.OK) : ResponseEntity.notFound().build();
     }
 }

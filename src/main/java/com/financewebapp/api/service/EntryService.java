@@ -26,7 +26,6 @@ public class EntryService {
 
     public List<Entry> getEntriesByMonthAndYear(Integer month, Integer year) {
         LOG.info("List Entries By Month {} And Year {}", month, year);
-
         return entryRepository.findByEntryMonthAndEntryYear(month, year);
     };
 

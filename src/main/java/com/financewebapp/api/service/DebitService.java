@@ -29,7 +29,6 @@ public class DebitService {
 
     public List<Debit> getDebitsByMonthAndYear(Integer month, Integer year) {
         LOG.info("List Debits By Month {} And Year {}", month, year);
-
         return debitRepository.findByDebitMonthAndDebitYear(month, year);
     };
 
