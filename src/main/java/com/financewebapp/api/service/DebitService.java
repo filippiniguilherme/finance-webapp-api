@@ -32,14 +32,17 @@ public class DebitService {
         return debitRepository.findByDebitMonthAndDebitYear(month, year);
     };
 
+    public List<Debit> getDebitsByMonthAndYearAndCategory(Integer month, Integer year, Long categoryId) {
+        LOG.info("List Debits By Month {}, Year {} And CategoryId {}", month, year, categoryId);
+        return debitRepository.findByDebitMonthAndDebitYearAndCategoryId(month, year, categoryId);
+    };
+
     public DebitDTO insert(Debit debit) {
         LOG.info("Insert Debit: {}", debit);
         return DebitDTO.create(debitRepository.save(debit));
     }
 
     public DebitDTO update(Debit debit, Long id) {
-        Assert.notNull(id, "Unable to update the data");
-
         Optional<Debit> optional = debitRepository.findById(id);
         if(optional.isPresent()){
             Debit db = optional.get();

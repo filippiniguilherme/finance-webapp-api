@@ -6,8 +6,8 @@ import org.modelmapper.ModelMapper;
 
 @Data
 public class CategoryDTO {
-    private Long CategoryId;
-    private String CategoryName;
+    private Long categoryId;
+    private String categoryName;
 
     public static CategoryDTO create(Category category) {
         ModelMapper modelMapper = new ModelMapper();

@@ -36,8 +36,8 @@ public class Entry {
     private Integer entryYear;
 
     @Column(name = "AuthorId")
-    private Long AuthorId;
+    private Long authorId;
 
     @Column(name = "CategoryId")
-    private Long CategoryId;
+    private Long categoryId;
 }

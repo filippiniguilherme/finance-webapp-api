@@ -6,8 +6,8 @@ import org.modelmapper.ModelMapper;
 
 @Data
 public class AuthorDTO {
-    private Long AuthorId;
-    private String AuthorName;
+    private Long authorId;
+    private String authorName;
 
     public static AuthorDTO create(Author author) {
         ModelMapper modelMapper = new ModelMapper();

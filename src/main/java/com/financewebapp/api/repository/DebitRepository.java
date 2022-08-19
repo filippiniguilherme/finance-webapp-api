@@ -7,5 +7,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DebitRepository extends JpaRepository<Debit, Long> {
-    List<Debit> findByDebitMonthAndDebitYear(Integer DebitMonth, Integer DebitYear);
+    List<Debit> findByDebitMonthAndDebitYear(Integer month, Integer year);
+
+    List<Debit> findByDebitMonthAndDebitYearAndCategoryId(Integer month, Integer year, Long category);
 }

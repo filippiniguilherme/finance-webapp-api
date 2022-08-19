@@ -31,7 +31,7 @@ public class DebitController {
 
     @Autowired
     private DebitService debitService;
-    private static final Logger LOG = LoggerFactory.getLogger(CategoryController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DebitController                                     .class);
 
     @GetMapping("/list")
     @ApiOperation("Get list of debits.")
@@ -57,6 +57,19 @@ public class DebitController {
     public ResponseEntity<List<Debit>> getDebitsByMonthAndYear(@PathVariable("month") Integer month, @PathVariable("year") Integer year) throws EntityNotFoundException {
         LOG.info("Getting List of Debit By Month And Year");
         return ResponseEntity.ok(debitService.getDebitsByMonthAndYear(month, year));
+    }
+
+    @GetMapping("/{month}/{year}/{categoryId}")
+    @ApiOperation("Get list of debits by month, year and category.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieve list of debits for given month, year and category."),
+            @ApiResponse(code = 400, message = "Bad Request. Please check response body for further details."),
+            @ApiResponse(code = 404, message = "Debits not found."),
+            @ApiResponse(code = 500, message = "Internal Server Error. Please check response body for further details.")
+    })
+    public ResponseEntity<List<Debit>> getDebitsByMonthYearAndCategory(@PathVariable("month") Integer month, @PathVariable("year") Integer year, @PathVariable("categoryId") Long categoryId) throws EntityNotFoundException {
+        LOG.info("Getting List of Debit By Month, Year and Category");
+        return ResponseEntity.ok(debitService.getDebitsByMonthAndYearAndCategory(month, year, categoryId));
     }
 
     @PostMapping

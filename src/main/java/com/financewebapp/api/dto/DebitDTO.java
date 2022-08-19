@@ -16,8 +16,8 @@ public class DebitDTO {
     private Float debitValue;
     private Integer debitMonth;
     private Integer debitYear;
-    private Long AuthorId;
-    private Long CategoryId;
+    private Long authorId;
+    private Long categoryId;
     
     public static DebitDTO create(Debit debit) {
         ModelMapper modelMapper = new ModelMapper();

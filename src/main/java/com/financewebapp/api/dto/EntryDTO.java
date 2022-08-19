@@ -16,8 +16,8 @@ public class EntryDTO {
     private Float entryValue;
     private Integer entryMonth;
     private Integer entryYear;
-    private Long AuthorId;
-    private Long CategoryId;
+    private Long authorId;
+    private Long categoryId;
 
 
     public static EntryDTO create(Entry entry) {
