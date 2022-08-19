@@ -22,7 +22,7 @@ import java.util.List;
 public class EntryController {
     @Autowired
     private EntryService entryService;
-    private static final Logger LOG = LoggerFactory.getLogger(CategoryController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(EntryController.class);
 
     @GetMapping("/list")
     @ApiOperation("Get all entries")
@@ -48,6 +48,19 @@ public class EntryController {
     public ResponseEntity<List<Entry>> getEntrysByMonthAndYear(@PathVariable("month") Integer month, @PathVariable("year") Integer year) throws EntityNotFoundException {
         LOG.info("Getting list of entries by month and year.");
         return ResponseEntity.ok(entryService.getEntriesByMonthAndYear(month, year));
+    }
+
+    @GetMapping("/{month}/{year}/{categoryId}")
+    @ApiOperation("Get entries filtered by month, year and category.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieve entries for this month and year."),
+            @ApiResponse(code = 400, message = "Bad Request. Please check response body for further details."),
+            @ApiResponse(code = 404, message = "Entries not found."),
+            @ApiResponse(code = 500, message = "Internal Server Error. Please check response body for further details.")
+    })
+    public ResponseEntity<List<Entry>> getEntrysByMonthAndYearAndCategoryId(@PathVariable("month") Integer month, @PathVariable("year") Integer year, @PathVariable("categoryId") Long categoryId) throws EntityNotFoundException {
+    LOG.info("Getting list of entries by month, year and category");
+        return ResponseEntity.ok(entryService.getEntriesByMonthAndYearAndCategory(month, year, categoryId));
     }
 
     @PostMapping

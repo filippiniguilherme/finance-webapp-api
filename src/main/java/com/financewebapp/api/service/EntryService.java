@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class EntryService {
     @Autowired
     private EntryRepository entryRepository;
-    private static final Logger LOG = LoggerFactory.getLogger(EntryRepository.class);
+    private static final Logger LOG = LoggerFactory.getLogger(EntryService.class);
 
     public List<EntryDTO> getEntries() {
         LOG.info("List Entries");
@@ -27,6 +27,11 @@ public class EntryService {
     public List<Entry> getEntriesByMonthAndYear(Integer month, Integer year) {
         LOG.info("List Entries By Month {} And Year {}", month, year);
         return entryRepository.findByEntryMonthAndEntryYear(month, year);
+    };
+
+    public List<Entry> getEntriesByMonthAndYearAndCategory(Integer month, Integer year, Long categoryId) {
+        LOG.info("List Entries By Month {}, Year {}, And CategoryId {}", month, year, categoryId);
+        return entryRepository.findByEntryMonthAndEntryYearAndCategoryId(month, year, categoryId);
     };
 
     public EntryDTO insert(Entry entry) {
@@ -48,7 +53,7 @@ public class EntryService {
             db.setAuthorId(entry.getAuthorId());
             db.setCategoryId(entry.getCategoryId());
 
-            LOG.info("Update Entry: " + db.getEntryId());
+            LOG.info("Update Entry: {}", db.getEntryId());
 
             entryRepository.save(db);
             return EntryDTO.create(db);

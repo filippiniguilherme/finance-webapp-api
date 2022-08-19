@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class AuthorService {
     @Autowired
     private AuthorRepository authorRepository;
-    private static final Logger LOG = LoggerFactory.getLogger(AuthorRepository.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AuthorService.class);
 
     public List<AuthorDTO> getAuthors() {
         LOG.info("List Authors");
@@ -25,7 +25,7 @@ public class AuthorService {
     };
 
     public AuthorDTO insert(Author author) {
-        LOG.info("Insert Author: " + author.getAuthorName());
+        LOG.info("Insert Author: {}", author.getAuthorName());
         return AuthorDTO.create(authorRepository.save(author));
     }
 

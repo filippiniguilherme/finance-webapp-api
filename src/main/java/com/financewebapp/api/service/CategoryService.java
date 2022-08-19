@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
-    private static final Logger LOG = LoggerFactory.getLogger(CategoryRepository.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CategoryService.class);
 
     public List<CategoryDTO> getCategories() {
         LOG.info("List Categories");
@@ -25,7 +25,7 @@ public class CategoryService {
     };
 
     public CategoryDTO insert(Category category) {
-        LOG.info("Insert Category: " + category.getCategoryName());
+        LOG.info("Insert Category: {}", category.getCategoryName());
         return CategoryDTO.create(categoryRepository.save(category));
     }
 

@@ -99,7 +99,7 @@ public class DebitService {
                 db.setCategoryId(debit.getCategoryId());
             }
 
-            LOG.info("Patch Debit: {}", db.toString());
+            LOG.info("Patch Debit: {}", db);
             debitRepository.save(db);
             return DebitDTO.create(db);
         } else {
