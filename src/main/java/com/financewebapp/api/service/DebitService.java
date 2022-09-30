@@ -1,7 +1,9 @@
 package com.financewebapp.api.service;
 
 import com.financewebapp.api.dto.DebitDTO;
+import com.financewebapp.api.dto.DebitsDTO;
 import com.financewebapp.api.model.Debit;
+import com.financewebapp.api.model.DebitDetail;
 import com.financewebapp.api.repository.DebitRepository;
 
 import org.modelmapper.internal.util.Assert;
@@ -12,19 +14,31 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class DebitService {
 
     @Autowired
     private DebitRepository debitRepository;
-    private static final Logger LOG = LoggerFactory.getLogger(DebitRepository.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DebitService.class);
 
+    private DebitDetail calcDetail(DebitsDTO debits) {
+        DebitDetail debitDetail = new DebitDetail();
 
-    public List<DebitDTO> getDebits() {
+        debitDetail.setCountDebits(debits.getDebits().size());
+        debitDetail.setTotalDebits(debits.getDebits().stream().mapToDouble(x -> x.getDebitValue()).sum());   
+
+        return debitDetail;
+    }
+
+    public DebitsDTO getDebits() {
         LOG.info("List Debits");
-        return debitRepository.findAll().stream().map(DebitDTO::create).collect(Collectors.toList());
+        DebitsDTO debitsDTO = new DebitsDTO();
+        
+        debitsDTO.setDebits(debitRepository.findAll());
+        debitsDTO.setDetail(calcDetail(debitsDTO));
+
+        return debitsDTO;
     };
 
     public List<Debit> getDebitsByMonthAndYear(Integer month, Integer year) {

@@ -1,6 +1,7 @@
 package com.financewebapp.api.controllers;
 
 import com.financewebapp.api.dto.DebitDTO;
+import com.financewebapp.api.dto.DebitsDTO;
 import com.financewebapp.api.model.Debit;
 import com.financewebapp.api.service.DebitService;
 
@@ -31,7 +32,7 @@ public class DebitController {
 
     @Autowired
     private DebitService debitService;
-    private static final Logger LOG = LoggerFactory.getLogger(DebitController                                     .class);
+    private static final Logger LOG = LoggerFactory.getLogger(DebitController.class);
 
     @GetMapping("/list")
     @ApiOperation("Get list of debits.")
@@ -41,7 +42,7 @@ public class DebitController {
             @ApiResponse(code = 404, message = "Debits not found."),
             @ApiResponse(code = 500, message = "Internal Server Error. Please check response body for further details.")
     })
-    public ResponseEntity<List<DebitDTO>> getDebits() throws EntityNotFoundException {
+    public ResponseEntity<DebitsDTO> getDebits() throws EntityNotFoundException {
         LOG.info("Getting debits list.");
         return ResponseEntity.ok(debitService.getDebits());
     }
