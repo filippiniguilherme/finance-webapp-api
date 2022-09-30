@@ -23,7 +23,7 @@ public class Entry {
     private String entryName;
 
     @Column(name = "EntryValue")
-    private Float entryValue;
+    private Double entryValue;
 
     @CreationTimestamp
     @Column(name = "EntryDate")

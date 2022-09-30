@@ -1,7 +1,9 @@
 package com.financewebapp.api.service;
 
+import com.financewebapp.api.dto.EntriesDTO;
 import com.financewebapp.api.dto.EntryDTO;
 import com.financewebapp.api.model.Entry;
+import com.financewebapp.api.model.EntryDetail;
 import com.financewebapp.api.repository.EntryRepository;
 import org.modelmapper.internal.util.Assert;
 import org.slf4j.Logger;
@@ -19,19 +21,43 @@ public class EntryService {
     private EntryRepository entryRepository;
     private static final Logger LOG = LoggerFactory.getLogger(EntryService.class);
 
-    public List<EntryDTO> getEntries() {
+    private EntryDetail calcDetail(EntriesDTO entries) {
+        EntryDetail entryDetail = new EntryDetail();
+
+        entryDetail.setCountEntries(entries.getEntries().size());
+        entryDetail.setTotalEntries(entries.getEntries().stream().mapToDouble(Entry::getEntryValue).sum());
+
+        return entryDetail;
+    }
+
+    public EntriesDTO getEntries() {
         LOG.info("List Entries");
-        return entryRepository.findAll().stream().map(EntryDTO::create).collect(Collectors.toList());
+        EntriesDTO entriesDTO = new EntriesDTO();
+        
+        entriesDTO.setEntries(entryRepository.findAll());
+        entriesDTO.setDetail(calcDetail(entriesDTO));
+
+        return entriesDTO;
     };
 
-    public List<Entry> getEntriesByMonthAndYear(Integer month, Integer year) {
+    public EntriesDTO getEntriesByMonthAndYear(Integer month, Integer year) {
         LOG.info("List Entries By Month {} And Year {}", month, year);
-        return entryRepository.findByEntryMonthAndEntryYear(month, year);
+        EntriesDTO entriesDTO = new EntriesDTO();
+        
+        entriesDTO.setEntries(entryRepository.findByEntryMonthAndEntryYear(month, year));
+        entriesDTO.setDetail(calcDetail(entriesDTO));
+
+        return entriesDTO;
     };
 
-    public List<Entry> getEntriesByMonthAndYearAndCategory(Integer month, Integer year, Long categoryId) {
+    public EntriesDTO getEntriesByMonthAndYearAndCategory(Integer month, Integer year, Long categoryId) {
         LOG.info("List Entries By Month {}, Year {}, And CategoryId {}", month, year, categoryId);
-        return entryRepository.findByEntryMonthAndEntryYearAndCategoryId(month, year, categoryId);
+        EntriesDTO entriesDTO = new EntriesDTO();
+        
+        entriesDTO.setEntries(entryRepository.findByEntryMonthAndEntryYearAndCategoryId(month, year, categoryId));
+        entriesDTO.setDetail(calcDetail(entriesDTO));
+
+        return entriesDTO;
     };
 
     public EntryDTO insert(Entry entry) {

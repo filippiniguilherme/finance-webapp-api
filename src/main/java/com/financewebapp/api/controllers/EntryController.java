@@ -1,5 +1,6 @@
 package com.financewebapp.api.controllers;
 
+import com.financewebapp.api.dto.EntriesDTO;
 import com.financewebapp.api.dto.EntryDTO;
 import com.financewebapp.api.model.Entry;
 import com.financewebapp.api.service.EntryService;
@@ -32,7 +33,7 @@ public class EntryController {
             @ApiResponse(code = 404, message = "Entries not found."),
             @ApiResponse(code = 500, message = "Internal Server Error. Please check response body for further details.")
     })
-    public ResponseEntity<List<EntryDTO>> getEntries() throws EntityNotFoundException {
+    public ResponseEntity<EntriesDTO> getEntries() throws EntityNotFoundException {
         LOG.info("Getting list of entries.");
         return ResponseEntity.ok(entryService.getEntries());
     }
@@ -45,7 +46,7 @@ public class EntryController {
             @ApiResponse(code = 404, message = "Entries not found."),
             @ApiResponse(code = 500, message = "Internal Server Error. Please check response body for further details.")
     })
-    public ResponseEntity<List<Entry>> getEntrysByMonthAndYear(@PathVariable("month") Integer month, @PathVariable("year") Integer year) throws EntityNotFoundException {
+    public ResponseEntity<EntriesDTO> getEntrysByMonthAndYear(@PathVariable("month") Integer month, @PathVariable("year") Integer year) throws EntityNotFoundException {
         LOG.info("Getting list of entries by month and year.");
         return ResponseEntity.ok(entryService.getEntriesByMonthAndYear(month, year));
     }
@@ -58,7 +59,7 @@ public class EntryController {
             @ApiResponse(code = 404, message = "Entries not found."),
             @ApiResponse(code = 500, message = "Internal Server Error. Please check response body for further details.")
     })
-    public ResponseEntity<List<Entry>> getEntrysByMonthAndYearAndCategoryId(@PathVariable("month") Integer month, @PathVariable("year") Integer year, @PathVariable("categoryId") Long categoryId) throws EntityNotFoundException {
+    public ResponseEntity<EntriesDTO> getEntrysByMonthAndYearAndCategoryId(@PathVariable("month") Integer month, @PathVariable("year") Integer year, @PathVariable("categoryId") Long categoryId) throws EntityNotFoundException {
     LOG.info("Getting list of entries by month, year and category");
         return ResponseEntity.ok(entryService.getEntriesByMonthAndYearAndCategory(month, year, categoryId));
     }

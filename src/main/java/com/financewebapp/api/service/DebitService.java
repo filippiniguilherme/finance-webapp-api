@@ -26,7 +26,7 @@ public class DebitService {
         DebitDetail debitDetail = new DebitDetail();
 
         debitDetail.setCountDebits(debits.getDebits().size());
-        debitDetail.setTotalDebits(debits.getDebits().stream().mapToDouble(x -> x.getDebitValue()).sum());   
+        debitDetail.setTotalDebits(debits.getDebits().stream().mapToDouble(Debit::getDebitValue).sum());   
 
         return debitDetail;
     }
@@ -39,17 +39,27 @@ public class DebitService {
         debitsDTO.setDetail(calcDetail(debitsDTO));
 
         return debitsDTO;
-    };
+    }
 
-    public List<Debit> getDebitsByMonthAndYear(Integer month, Integer year) {
+    public DebitsDTO getDebitsByMonthAndYear(Integer month, Integer year) {
         LOG.info("List Debits By Month {} And Year {}", month, year);
-        return debitRepository.findByDebitMonthAndDebitYear(month, year);
-    };
+        DebitsDTO debitsDTO = new DebitsDTO();
+        
+        debitsDTO.setDebits(debitRepository.findByDebitMonthAndDebitYear(month, year));
+        debitsDTO.setDetail(calcDetail(debitsDTO));
 
-    public List<Debit> getDebitsByMonthAndYearAndCategory(Integer month, Integer year, Long categoryId) {
+        return debitsDTO;
+    }
+
+    public DebitsDTO getDebitsByMonthAndYearAndCategory(Integer month, Integer year, Long categoryId) {
         LOG.info("List Debits By Month {}, Year {} And CategoryId {}", month, year, categoryId);
-        return debitRepository.findByDebitMonthAndDebitYearAndCategoryId(month, year, categoryId);
-    };
+        DebitsDTO debitsDTO = new DebitsDTO();
+        
+        debitsDTO.setDebits(debitRepository.findByDebitMonthAndDebitYearAndCategoryId(month, year, categoryId));
+        debitsDTO.setDetail(calcDetail(debitsDTO));
+
+        return debitsDTO;
+    }
 
     public DebitDTO insert(Debit debit) {
         LOG.info("Insert Debit: {}", debit);

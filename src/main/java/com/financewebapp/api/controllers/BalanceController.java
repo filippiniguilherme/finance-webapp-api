@@ -27,6 +27,19 @@ public class BalanceController {
     private BalanceService balanceService;
     private static final Logger LOG = LoggerFactory.getLogger(BalanceController.class);
 
+    @GetMapping("/")
+    @ApiOperation("Get balance total.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved balance total."),
+            @ApiResponse(code = 400, message = "Bad Request. Please check response body for further details."),
+            @ApiResponse(code = 404, message = "Balance not found."),
+            @ApiResponse(code = 500, message = "Internal Server Error. Please check response body for further details.")
+    })
+    public ResponseEntity<BalanceDTO> getBalance() throws EntityNotFoundException {
+        LOG.info("Getting List of Balance");
+        return ResponseEntity.ok(balanceService.getBalance());
+    }
+
     @GetMapping("/{month}/{year}")
     @ApiOperation("Get balance by month and year.")
     @ApiResponses(value = {
@@ -35,10 +48,10 @@ public class BalanceController {
             @ApiResponse(code = 404, message = "Balance not found."),
             @ApiResponse(code = 500, message = "Internal Server Error. Please check response body for further details.")
     })
-    public ResponseEntity<BalanceDTO> getBalance(
+    public ResponseEntity<BalanceDTO> getBalanceByMonthAndYear(
             @PathVariable("month") Integer month, @PathVariable("year") Integer year
     ) throws EntityNotFoundException {
         LOG.info("Getting List of Balance");
-        return ResponseEntity.ok(balanceService.getBalance(month, year));
+        return ResponseEntity.ok(balanceService.getBalanceByMonthAndYear(month, year));
     }
 }
