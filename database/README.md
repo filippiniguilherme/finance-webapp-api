@@ -36,12 +36,12 @@ CREATE TABLE Entries (
 ### Table Debits
 ```sql
 CREATE TABLE Debits (
-	DebitId int Primary Key not null auto_increment,
-	DebitName varchar(80),
-	DebitDate timestamp not null,
-	DebitValue float not null,
-	DebitMonth int,
-	DebitYear int,
+	id int Primary Key not null auto_increment,
+	name varchar(80),
+	date timestamp not null,
+	value float not null,
+	month int,
+	year int,
 	AuthorId int,
 	CategoryId int,
 	FOREIGN KEY (AuthorId) REFERENCES Authors(AuthorId),

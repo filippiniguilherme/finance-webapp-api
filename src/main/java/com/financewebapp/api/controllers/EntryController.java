@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
+@CrossOrigin(maxAge = 3600)
 @RestController
 @RequestMapping("/api/v1/entry")
 public class EntryController {
@@ -89,7 +90,7 @@ public class EntryController {
     })
     public ResponseEntity<String> put(@PathVariable("id") Long id, @RequestBody Entry entry) throws EntityNotFoundException, IllegalArgumentException {
         LOG.info("Updating Entry item by ID.");
-        entry.setEntryId(id);
+        entry.setId(id);
         EntryDTO e = entryService.update(entry, id);
 
         return e != null ? new ResponseEntity<>("Successfully update entry.", HttpStatus.OK) : ResponseEntity.notFound().build();

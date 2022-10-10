@@ -9,13 +9,13 @@ import org.modelmapper.ModelMapper;
 
 @Data
 public class EntryDTO {
-    private Long entryId;
+    private Long id;
 
-    private String entryName;
-    private Timestamp entryDate;
-    private Float entryValue;
-    private Integer entryMonth;
-    private Integer entryYear;
+    private String name;
+    private Timestamp date;
+    private Float value;
+    private Integer month;
+    private Integer year;
     private Long authorId;
     private Long categoryId;
 

@@ -25,7 +25,7 @@ public class EntryService {
         EntryDetail entryDetail = new EntryDetail();
 
         entryDetail.setCountEntries(entries.getEntries().size());
-        entryDetail.setTotalEntries(entries.getEntries().stream().mapToDouble(Entry::getEntryValue).sum());
+        entryDetail.setTotalEntries(entries.getEntries().stream().mapToDouble(Entry::getValue).sum());
 
         return entryDetail;
     }
@@ -44,7 +44,7 @@ public class EntryService {
         LOG.info("List Entries By Month {} And Year {}", month, year);
         EntriesDTO entriesDTO = new EntriesDTO();
         
-        entriesDTO.setEntries(entryRepository.findByEntryMonthAndEntryYear(month, year));
+        entriesDTO.setEntries(entryRepository.findByMonthAndYear(month, year));
         entriesDTO.setDetail(calcDetail(entriesDTO));
 
         return entriesDTO;
@@ -54,7 +54,7 @@ public class EntryService {
         LOG.info("List Entries By Month {}, Year {}, And CategoryId {}", month, year, categoryId);
         EntriesDTO entriesDTO = new EntriesDTO();
         
-        entriesDTO.setEntries(entryRepository.findByEntryMonthAndEntryYearAndCategoryId(month, year, categoryId));
+        entriesDTO.setEntries(entryRepository.findByMonthAndYearAndCategoryId(month, year, categoryId));
         entriesDTO.setDetail(calcDetail(entriesDTO));
 
         return entriesDTO;
@@ -72,14 +72,14 @@ public class EntryService {
         if(optional.isPresent()){
             Entry db = optional.get();
 
-            db.setEntryName(entry.getEntryName());
-            db.setEntryValue(entry.getEntryValue());
-            db.setEntryMonth(entry.getEntryMonth());
-            db.setEntryYear(entry.getEntryYear());
+            db.setName(entry.getName());
+            db.setValue(entry.getValue());
+            db.setMonth(entry.getMonth());
+            db.setYear(entry.getYear());
             db.setAuthorId(entry.getAuthorId());
             db.setCategoryId(entry.getCategoryId());
 
-            LOG.info("Update Entry: {}", db.getEntryId());
+            LOG.info("Update Entry: {}", db.getId());
 
             entryRepository.save(db);
             return EntryDTO.create(db);
@@ -100,20 +100,20 @@ public class EntryService {
         if(optional.isPresent()) {
             Entry db = optional.get();
             
-            if(entry.getEntryName() != null) {
-                db.setEntryName(entry.getEntryName());
+            if(entry.getName() != null) {
+                db.setName(entry.getName());
             }
 
-            if(entry.getEntryValue() != null) {
-                db.setEntryValue(entry.getEntryValue());
+            if(entry.getValue() != null) {
+                db.setValue(entry.getValue());
             }
 
-            if(entry.getEntryMonth() != null) {
-                db.setEntryMonth(entry.getEntryMonth());
+            if(entry.getMonth() != null) {
+                db.setMonth(entry.getMonth());
             }
 
-            if(entry.getEntryYear() != null) {
-                db.setEntryYear(entry.getEntryYear());
+            if(entry.getYear() != null) {
+                db.setYear(entry.getYear());
             }
 
             if(entry.getAuthorId() != null) {

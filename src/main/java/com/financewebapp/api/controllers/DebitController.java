@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
+@CrossOrigin(maxAge = 3600)
 @RestController
 @RequestMapping("/api/v1/debit")
 public class DebitController {
@@ -98,7 +100,7 @@ public class DebitController {
     })
     public ResponseEntity<String> put(@PathVariable("id") Long id, @RequestBody Debit debit) throws EntityNotFoundException, IllegalArgumentException {
         LOG.info("Updating debit item.");
-        debit.setDebitId(id);
+        debit.setId(id);
         DebitDTO e = debitService.update(debit, id);
 
         return e != null ? new ResponseEntity<>("Successfully update debit.", HttpStatus.OK) : ResponseEntity.notFound().build();

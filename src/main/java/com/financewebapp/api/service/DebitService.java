@@ -26,7 +26,7 @@ public class DebitService {
         DebitDetail debitDetail = new DebitDetail();
 
         debitDetail.setCountDebits(debits.getDebits().size());
-        debitDetail.setTotalDebits(debits.getDebits().stream().mapToDouble(Debit::getDebitValue).sum());   
+        debitDetail.setTotalDebits(debits.getDebits().stream().mapToDouble(Debit::getValue).sum());   
 
         return debitDetail;
     }
@@ -45,7 +45,7 @@ public class DebitService {
         LOG.info("List Debits By Month {} And Year {}", month, year);
         DebitsDTO debitsDTO = new DebitsDTO();
         
-        debitsDTO.setDebits(debitRepository.findByDebitMonthAndDebitYear(month, year));
+        debitsDTO.setDebits(debitRepository.findByMonthAndYear(month, year));
         debitsDTO.setDetail(calcDetail(debitsDTO));
 
         return debitsDTO;
@@ -55,7 +55,7 @@ public class DebitService {
         LOG.info("List Debits By Month {}, Year {} And CategoryId {}", month, year, categoryId);
         DebitsDTO debitsDTO = new DebitsDTO();
         
-        debitsDTO.setDebits(debitRepository.findByDebitMonthAndDebitYearAndCategoryId(month, year, categoryId));
+        debitsDTO.setDebits(debitRepository.findByMonthAndYearAndCategoryId(month, year, categoryId));
         debitsDTO.setDetail(calcDetail(debitsDTO));
 
         return debitsDTO;
@@ -71,10 +71,10 @@ public class DebitService {
         if(optional.isPresent()){
             Debit db = optional.get();
 
-            db.setDebitName(debit.getDebitName());
-            db.setDebitValue(debit.getDebitValue());
-            db.setDebitMonth(debit.getDebitMonth());
-            db.setDebitYear(debit.getDebitYear());
+            db.setName(debit.getName());
+            db.setValue(debit.getValue());
+            db.setMonth(debit.getMonth());
+            db.setYear(debit.getYear());
             db.setAuthorId(debit.getAuthorId());
             db.setCategoryId(debit.getCategoryId());
 
@@ -99,20 +99,20 @@ public class DebitService {
         if(optional.isPresent()) {
             Debit db = optional.get();
             
-            if(debit.getDebitName() != null) {
-                db.setDebitName(debit.getDebitName());
+            if(debit.getName() != null) {
+                db.setName(debit.getName());
             }
 
-            if(debit.getDebitValue() != null) {
-                db.setDebitValue(debit.getDebitValue());
+            if(debit.getValue() != null) {
+                db.setValue(debit.getValue());
             }
 
-            if(debit.getDebitMonth() != null) {
-                db.setDebitMonth(debit.getDebitMonth());
+            if(debit.getMonth() != null) {
+                db.setMonth(debit.getMonth());
             }
 
-            if(debit.getDebitYear() != null) {
-                db.setDebitYear(debit.getDebitYear());
+            if(debit.getYear() != null) {
+                db.setYear(debit.getYear());
             }
 
             if(debit.getAuthorId() != null) {

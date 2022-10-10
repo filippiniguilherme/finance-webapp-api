@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface EntryRepository extends JpaRepository<Entry, Long> {
-    List<Entry> findByEntryMonthAndEntryYear(Integer month, Integer year);
+    List<Entry> findByMonthAndYear(Integer month, Integer year);
 
-    List<Entry> findByEntryMonthAndEntryYearAndCategoryId(Integer month, Integer year, Long category);
+    List<Entry> findByMonthAndYearAndCategoryId(Integer month, Integer year, Long category);
 }
