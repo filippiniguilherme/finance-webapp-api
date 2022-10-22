@@ -5,14 +5,14 @@ import com.financewebapp.api.dto.DebitsDTO;
 import com.financewebapp.api.model.Debit;
 import com.financewebapp.api.model.DebitDetail;
 import com.financewebapp.api.repository.DebitRepository;
-
+import com.financewebapp.api.utils.PropertyBeanUtils;
 import org.modelmapper.internal.util.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Optional;
 
 @Service
@@ -20,6 +20,8 @@ public class DebitService {
 
     @Autowired
     private DebitRepository debitRepository;
+
+    private PropertyBeanUtils propertyBeanUtils;
     private static final Logger LOG = LoggerFactory.getLogger(DebitService.class);
 
     private DebitDetail calcDetail(DebitsDTO debits) {
@@ -92,40 +94,18 @@ public class DebitService {
         debitRepository.deleteById(id);
     }
 
-    public DebitDTO patch(Long id, Debit debit) {
+    public DebitDTO patch(Long id, Debit debit) throws InvocationTargetException, IllegalAccessException {
         Assert.notNull(id, "Unable to update the data");
 
         Optional<Debit> optional = debitRepository.findById(id);
         if(optional.isPresent()) {
-            Debit db = optional.get();
-            
-            if(debit.getName() != null) {
-                db.setName(debit.getName());
-            }
+            Debit debitDB = optional.get();
 
-            if(debit.getValue() != null) {
-                db.setValue(debit.getValue());
-            }
+            propertyBeanUtils.compareDebit(debitDB, debit);
 
-            if(debit.getMonth() != null) {
-                db.setMonth(debit.getMonth());
-            }
-
-            if(debit.getYear() != null) {
-                db.setYear(debit.getYear());
-            }
-
-            if(debit.getAuthorId() != null) {
-                db.setAuthorId(debit.getAuthorId());
-            }
-
-            if(debit.getCategoryId() != null) {
-                db.setCategoryId(debit.getCategoryId());
-            }
-
-            LOG.info("Patch Debit: {}", db);
-            debitRepository.save(db);
-            return DebitDTO.create(db);
+            LOG.info("Patch Debit: {}", debitDB);
+            debitRepository.save(debitDB);
+            return DebitDTO.create(debitDB);
         } else {
             throw new RuntimeException("Unable to update the data");
         }
