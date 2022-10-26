@@ -5,21 +5,23 @@ import com.financewebapp.api.dto.EntryDTO;
 import com.financewebapp.api.model.Entry;
 import com.financewebapp.api.model.EntryDetail;
 import com.financewebapp.api.repository.EntryRepository;
+import com.financewebapp.api.utils.PropertyBeanUtils;
 import org.modelmapper.internal.util.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class EntryService {
     @Autowired
     private EntryRepository entryRepository;
     private static final Logger LOG = LoggerFactory.getLogger(EntryService.class);
+
+    private PropertyBeanUtils propertyBeanUtils;
 
     private EntryDetail calcDetail(EntriesDTO entries) {
         EntryDetail entryDetail = new EntryDetail();
@@ -93,40 +95,18 @@ public class EntryService {
         entryRepository.deleteById(id);
     }
 
-    public EntryDTO patch(Long id, Entry entry) {
+    public EntryDTO patch(Long id, Entry entry) throws InvocationTargetException, IllegalAccessException {
         Assert.notNull(id, "Unable to update the data");
 
         Optional<Entry> optional = entryRepository.findById(id);
         if(optional.isPresent()) {
-            Entry db = optional.get();
-            
-            if(entry.getName() != null) {
-                db.setName(entry.getName());
-            }
+            Entry entryDB = optional.get();
 
-            if(entry.getValue() != null) {
-                db.setValue(entry.getValue());
-            }
+            propertyBeanUtils.compareEntry(entryDB, entry);
 
-            if(entry.getMonth() != null) {
-                db.setMonth(entry.getMonth());
-            }
-
-            if(entry.getYear() != null) {
-                db.setYear(entry.getYear());
-            }
-
-            if(entry.getAuthorId() != null) {
-                db.setAuthorId(entry.getAuthorId());
-            }
-
-            if(entry.getCategoryId() != null) {
-                db.setCategoryId(entry.getCategoryId());
-            }
-
-            LOG.info("Patch Entry: {}", db.toString());
-            entryRepository.save(db);
-            return EntryDTO.create(db);
+            LOG.info("Patch Entry: {}", entryDB);
+            entryRepository.save(entryDB);
+            return EntryDTO.create(entryDB);
         } else {
             throw new RuntimeException("Unable to update the data");
         }

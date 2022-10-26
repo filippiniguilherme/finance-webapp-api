@@ -4,7 +4,6 @@ import com.financewebapp.api.dto.EntriesDTO;
 import com.financewebapp.api.dto.EntryDTO;
 import com.financewebapp.api.model.Entry;
 import com.financewebapp.api.service.EntryService;
-
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -16,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.List;
+import java.lang.reflect.InvocationTargetException;
 
 @CrossOrigin(maxAge = 3600)
 @RestController
@@ -118,7 +117,7 @@ public class EntryController {
             @ApiResponse(code = 404, message = "Could not be updated."),
             @ApiResponse(code = 500, message = "Internal Server Error. Please check response body for further details.")
     })
-    public ResponseEntity<String> patch(@PathVariable("id") Long id, @RequestBody Entry entry) throws EntityNotFoundException, IllegalArgumentException {
+    public ResponseEntity<String> patch(@PathVariable("id") Long id, @RequestBody Entry entry) throws EntityNotFoundException, IllegalArgumentException, InvocationTargetException, IllegalAccessException {
         LOG.info("Updating Entry item partially.");
         EntryDTO e = entryService.patch(id, entry);
 

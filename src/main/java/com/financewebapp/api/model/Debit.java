@@ -3,12 +3,10 @@ package com.financewebapp.api.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.sql.Timestamp;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-
-import org.hibernate.annotations.CreationTimestamp;
+import java.sql.Timestamp;
 
 @Entity(name = "Debits")
 @NoArgsConstructor
@@ -20,25 +18,25 @@ public class Debit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "Name")
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "Value")
+    @Column(name = "value")
     private Double value;
 
     @CreationTimestamp
-    @Column(name = "Date")
+    @Column(name = "date")
     private Timestamp date;
 
-    @Column(name = "Month")
+    @Column(name = "month")
     private Integer month;
 
-    @Column(name = "Year")
+    @Column(name = "year")
     private Integer year;
 
-    @Column(name = "AuthorId")
+    @Column(name = "authorId")
     private Long authorId;
 
-    @Column(name = "CategoryId")
+    @Column(name = "categoryId")
     private Long categoryId;
 }
