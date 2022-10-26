@@ -1,5 +1,9 @@
 # Script for Database application
 
+### Running Docker Image and create container MySQL
+```
+docker run --name mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -p 3306:3306 -d mysql:latest
+```
 ### Table Authors
 
 ```sql
