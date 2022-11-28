@@ -63,9 +63,9 @@ public class DebitService {
         return debitsDTO;
     }
 
-    public DebitDTO insert(Debit debit) {
+    public Debit insert(Debit debit) {
         LOG.info("Insert Debit: {}", debit);
-        return DebitDTO.create(debitRepository.save(debit));
+        return debitRepository.save(debit);
     }
 
     public DebitDTO update(Debit debit, Long id) {
@@ -77,7 +77,7 @@ public class DebitService {
             db.setValue(debit.getValue());
             db.setMonth(debit.getMonth());
             db.setYear(debit.getYear());
-            db.setAuthorId(debit.getAuthorId());
+            db.setAuthor(debit.getAuthor());
             db.setCategoryId(debit.getCategoryId());
 
             LOG.info("Update Debit: {}", db.toString());

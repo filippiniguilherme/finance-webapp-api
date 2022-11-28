@@ -18,7 +18,7 @@ public class PropertyBeanUtils extends BeanUtilsBean {
 
         copyProperty(entryDB, "month", entry.getMonth());
 
-        copyProperty(entryDB, "authorId", entry.getAuthorId());
+        copyProperty(entryDB, "authorId", entry.getAuthor());
 
         copyProperty(entryDB, "categoryId", entry.getCategoryId());
     }
@@ -34,7 +34,7 @@ public class PropertyBeanUtils extends BeanUtilsBean {
 
         copyProperty(debitDB, "month", debit.getMonth());
 
-        copyProperty(debitDB, "authorId", debit.getAuthorId());
+        copyProperty(debitDB, "author", debit.getAuthor());
 
         copyProperty(debitDB, "categoryId", debit.getCategoryId());
     }

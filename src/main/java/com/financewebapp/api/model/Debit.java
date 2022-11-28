@@ -34,8 +34,9 @@ public class Debit {
     @Column(name = "year")
     private Integer year;
 
-    @Column(name = "authorId")
-    private Long authorId;
+    @OneToOne
+    @JoinColumn(name = "authorId", referencedColumnName = "AuthorId")
+    private Author author;
 
     @Column(name = "categoryId")
     private Long categoryId;

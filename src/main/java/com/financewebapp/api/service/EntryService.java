@@ -62,9 +62,9 @@ public class EntryService {
         return entriesDTO;
     };
 
-    public EntryDTO insert(Entry entry) {
+    public Entry insert(Entry entry) {
         LOG.info("Insert Entry: {}", entry);
-        return EntryDTO.create(entryRepository.save(entry));
+        return entryRepository.save(entry);
     }
 
     public EntryDTO update(Entry entry, Long id) {
@@ -78,7 +78,7 @@ public class EntryService {
             db.setValue(entry.getValue());
             db.setMonth(entry.getMonth());
             db.setYear(entry.getYear());
-            db.setAuthorId(entry.getAuthorId());
+            db.setAuthor(entry.getAuthor());
             db.setCategoryId(entry.getCategoryId());
 
             LOG.info("Update Entry: {}", db.getId());

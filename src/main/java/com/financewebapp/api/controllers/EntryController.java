@@ -74,7 +74,7 @@ public class EntryController {
     })
     public ResponseEntity<String> post(@RequestBody Entry entry) throws EntityNotFoundException, IllegalArgumentException {
         LOG.info("Saving new Entry item.");
-        EntryDTO e = entryService.insert(entry);
+        Entry e = entryService.insert(entry);
 
         return e != null ? new ResponseEntity<>("Successfully save entry.", HttpStatus.OK) : ResponseEntity.notFound().build();
     }

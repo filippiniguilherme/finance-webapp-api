@@ -75,7 +75,7 @@ public class DebitController {
     })
     public ResponseEntity<String> post(@RequestBody Debit debit) throws EntityNotFoundException, IllegalArgumentException {
         LOG.info("Posting item of Debit");
-        DebitDTO e = debitService.insert(debit);
+        Debit e = debitService.insert(debit);
 
         return e != null ? new ResponseEntity<>("Successfully save debit.", HttpStatus.OK) : ResponseEntity.notFound().build();
     }
