@@ -26,8 +26,11 @@ public class Entry {
     private Double value;
 
     @CreationTimestamp
+    @Column(name = "dateCreated")
+    private Timestamp dateCreated;
+
     @Column(name = "date")
-    private Timestamp date;
+    private String date;
 
     @Column(name = "month")
     private Integer month;
@@ -39,6 +42,7 @@ public class Entry {
     @JoinColumn(name = "authorId", referencedColumnName = "AuthorId")
     private Author author;
 
-    @Column(name = "categoryId")
-    private Long categoryId;
+    @OneToOne
+    @JoinColumn(name = "categoryId", referencedColumnName = "CategoryId")
+    private Category category;
 }

@@ -2,6 +2,7 @@ package com.financewebapp.api.service;
 
 import com.financewebapp.api.dto.DebitDTO;
 import com.financewebapp.api.dto.DebitsDTO;
+import com.financewebapp.api.model.Category;
 import com.financewebapp.api.model.Debit;
 import com.financewebapp.api.model.DebitDetail;
 import com.financewebapp.api.repository.DebitRepository;
@@ -53,11 +54,11 @@ public class DebitService {
         return debitsDTO;
     }
 
-    public DebitsDTO getDebitsByMonthAndYearAndCategory(Integer month, Integer year, Long categoryId) {
-        LOG.info("List Debits By Month {}, Year {} And CategoryId {}", month, year, categoryId);
+    public DebitsDTO getDebitsByMonthAndYearAndCategory(Integer month, Integer year, Category category) {
+        LOG.info("List Debits By Month {}, Year {} And CategoryId {}", month, year, category);
         DebitsDTO debitsDTO = new DebitsDTO();
         
-        debitsDTO.setDebits(debitRepository.findByMonthAndYearAndCategoryId(month, year, categoryId));
+        debitsDTO.setDebits(debitRepository.findByMonthAndYearAndCategory(month, year, category));
         debitsDTO.setDetail(calcDetail(debitsDTO));
 
         return debitsDTO;
@@ -78,7 +79,7 @@ public class DebitService {
             db.setMonth(debit.getMonth());
             db.setYear(debit.getYear());
             db.setAuthor(debit.getAuthor());
-            db.setCategoryId(debit.getCategoryId());
+            db.setCategory(debit.getCategory());
 
             LOG.info("Update Debit: {}", db.toString());
 

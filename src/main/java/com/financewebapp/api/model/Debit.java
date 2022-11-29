@@ -7,14 +7,17 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Set;
 
-@Entity(name = "Debits")
+@Entity
+@Table(name = "Debits")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 public class Debit {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -25,8 +28,11 @@ public class Debit {
     private Double value;
 
     @CreationTimestamp
+    @Column(name = "dateCreated")
+    private Timestamp dateCreated;
+
     @Column(name = "date")
-    private Timestamp date;
+    private String date;
 
     @Column(name = "month")
     private Integer month;
@@ -38,6 +44,7 @@ public class Debit {
     @JoinColumn(name = "authorId", referencedColumnName = "AuthorId")
     private Author author;
 
-    @Column(name = "categoryId")
-    private Long categoryId;
+    @OneToOne
+    @JoinColumn(name = "categoryId", referencedColumnName = "categoryId")
+    private Category category;    
 }

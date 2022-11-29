@@ -2,6 +2,7 @@ package com.financewebapp.api.controllers;
 
 import com.financewebapp.api.dto.EntriesDTO;
 import com.financewebapp.api.dto.EntryDTO;
+import com.financewebapp.api.model.Category;
 import com.financewebapp.api.model.Entry;
 import com.financewebapp.api.service.EntryService;
 import io.swagger.annotations.ApiOperation;
@@ -61,7 +62,8 @@ public class EntryController {
     })
     public ResponseEntity<EntriesDTO> getEntrysByMonthAndYearAndCategoryId(@PathVariable("month") Integer month, @PathVariable("year") Integer year, @PathVariable("categoryId") Long categoryId) throws EntityNotFoundException {
     LOG.info("Getting list of entries by month, year and category");
-        return ResponseEntity.ok(entryService.getEntriesByMonthAndYearAndCategory(month, year, categoryId));
+        Category category = new Category(categoryId, null);
+        return ResponseEntity.ok(entryService.getEntriesByMonthAndYearAndCategory(month, year, category));
     }
 
     @PostMapping
@@ -119,7 +121,8 @@ public class EntryController {
     })
     public ResponseEntity<String> patch(@PathVariable("id") Long id, @RequestBody Entry entry) throws EntityNotFoundException, IllegalArgumentException, InvocationTargetException, IllegalAccessException {
         LOG.info("Updating Entry item partially.");
-        EntryDTO e = entryService.patch(id, entry);
+        entry.setId(id);
+        EntryDTO e = entryService.patch(entry);
 
         return e != null ? new ResponseEntity<>("Successfully update entry partially.", HttpStatus.OK) : ResponseEntity.notFound().build();
     }

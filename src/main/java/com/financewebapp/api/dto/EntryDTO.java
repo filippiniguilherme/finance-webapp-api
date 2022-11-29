@@ -3,6 +3,7 @@ package com.financewebapp.api.dto;
 import com.financewebapp.api.model.Entry;
 import lombok.Data;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 import org.modelmapper.ModelMapper;
@@ -12,7 +13,8 @@ public class EntryDTO {
     private Long id;
 
     private String name;
-    private Timestamp date;
+    private Timestamp dateCreated;
+    private Date date;
     private Float value;
     private Integer month;
     private Integer year;

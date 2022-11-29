@@ -2,6 +2,7 @@ package com.financewebapp.api.controllers;
 
 import com.financewebapp.api.dto.DebitDTO;
 import com.financewebapp.api.dto.DebitsDTO;
+import com.financewebapp.api.model.Category;
 import com.financewebapp.api.model.Debit;
 import com.financewebapp.api.service.DebitService;
 import io.swagger.annotations.ApiOperation;
@@ -62,7 +63,8 @@ public class DebitController {
     })
     public ResponseEntity<DebitsDTO> getDebitsByMonthYearAndCategory(@PathVariable("month") Integer month, @PathVariable("year") Integer year, @PathVariable("categoryId") Long categoryId) throws EntityNotFoundException {
         LOG.info("Getting List of Debit By Month, Year and Category");
-        return ResponseEntity.ok(debitService.getDebitsByMonthAndYearAndCategory(month, year, categoryId));
+        Category category = new Category(categoryId, null);
+        return ResponseEntity.ok(debitService.getDebitsByMonthAndYearAndCategory(month, year, category));
     }
 
     @PostMapping

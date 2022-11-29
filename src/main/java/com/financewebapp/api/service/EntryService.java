@@ -2,6 +2,7 @@ package com.financewebapp.api.service;
 
 import com.financewebapp.api.dto.EntriesDTO;
 import com.financewebapp.api.dto.EntryDTO;
+import com.financewebapp.api.model.Category;
 import com.financewebapp.api.model.Entry;
 import com.financewebapp.api.model.EntryDetail;
 import com.financewebapp.api.repository.EntryRepository;
@@ -52,11 +53,10 @@ public class EntryService {
         return entriesDTO;
     };
 
-    public EntriesDTO getEntriesByMonthAndYearAndCategory(Integer month, Integer year, Long categoryId) {
-        LOG.info("List Entries By Month {}, Year {}, And CategoryId {}", month, year, categoryId);
+    public EntriesDTO getEntriesByMonthAndYearAndCategory(Integer month, Integer year, Category category) {
+        LOG.info("List Entries By Month {}, Year {}, And CategoryId {}", month, year, category);
         EntriesDTO entriesDTO = new EntriesDTO();
-        
-        entriesDTO.setEntries(entryRepository.findByMonthAndYearAndCategoryId(month, year, categoryId));
+        entriesDTO.setEntries(entryRepository.findByMonthAndYearAndCategory(month, year, category));
         entriesDTO.setDetail(calcDetail(entriesDTO));
 
         return entriesDTO;
@@ -68,6 +68,7 @@ public class EntryService {
     }
 
     public EntryDTO update(Entry entry, Long id) {
+        LOG.info("ID: {}", id);
         Assert.notNull(id, "Unable to update the data");
 
         Optional<Entry> optional = entryRepository.findById(id);
@@ -79,7 +80,7 @@ public class EntryService {
             db.setMonth(entry.getMonth());
             db.setYear(entry.getYear());
             db.setAuthor(entry.getAuthor());
-            db.setCategoryId(entry.getCategoryId());
+            db.setCategory(entry.getCategory());
 
             LOG.info("Update Entry: {}", db.getId());
 
@@ -95,12 +96,15 @@ public class EntryService {
         entryRepository.deleteById(id);
     }
 
-    public EntryDTO patch(Long id, Entry entry) throws InvocationTargetException, IllegalAccessException {
-        Assert.notNull(id, "Unable to update the data");
+    public EntryDTO patch(Entry entry) throws InvocationTargetException, IllegalAccessException {
+        Assert.notNull(entry.getId(), "Unable to update the data");
+        LOG.info("Patch Entry: {}", entry);
 
-        Optional<Entry> optional = entryRepository.findById(id);
+        Optional<Entry> optional = entryRepository.findById(entry.getId());
         if(optional.isPresent()) {
             Entry entryDB = optional.get();
+
+            LOG.info("EntryDB: {}", entryDB, optional);
 
             propertyBeanUtils.compareEntry(entryDB, entry);
 

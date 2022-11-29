@@ -1,11 +1,8 @@
 package com.financewebapp.api.service;
 
 import com.financewebapp.api.dto.BalanceDTO;
-import com.financewebapp.api.dto.DebitDTO;
 import com.financewebapp.api.dto.DebitsDTO;
 import com.financewebapp.api.dto.EntriesDTO;
-import com.financewebapp.api.model.Debit;
-import com.financewebapp.api.model.Entry;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.util.List;
 @Service
 public class BalanceService {
     @Autowired
@@ -31,8 +26,8 @@ public class BalanceService {
 
         DebitsDTO debits = debitService.getDebits();
         EntriesDTO entries = entryService.getEntries();
-        LOG.info("Balance value: {}", (debits.getDetail().getTotalDebits() - entries.getDetail().getTotalEntries()));
-        Double balanceValue = new BigDecimal((debits.getDetail().getTotalDebits() - entries.getDetail().getTotalEntries())).setScale(2, RoundingMode.HALF_UP).doubleValue();
+        LOG.info("Balance value: {}", (entries.getDetail().getTotalEntries()) - debits.getDetail().getTotalDebits());
+        Double balanceValue = BigDecimal.valueOf((entries.getDetail().getTotalEntries() - debits.getDetail().getTotalDebits())).setScale(2, RoundingMode.HALF_UP).doubleValue();
 
         balanceDTO.setDebitDetail(debits.getDetail());
         balanceDTO.setEntryDetail(entries.getDetail());
@@ -42,7 +37,7 @@ public class BalanceService {
         balanceDTO.setYear(null);
         
         return balanceDTO;
-    };
+    }
 
     public BalanceDTO getBalanceByMonthAndYear(Integer month, Integer year) {
         LOG.info("List Balance");
@@ -51,9 +46,8 @@ public class BalanceService {
         DebitsDTO debits = debitService.getDebitsByMonthAndYear(month, year);
         EntriesDTO entries = entryService.getEntriesByMonthAndYear(month, year);
         
-        LOG.info("Balance value: {}", (debits.getDetail().getTotalDebits() - entries.getDetail().getTotalEntries()));
-        // Double balanceValue = new BigDecimal((debits.getDetail().getTotalDebits() - entries.getDetail().getTotalEntries())).setScale(2, RoundingMode.HALF_UP).doubleValue();
-        Double balanceValue = (debits.getDetail().getTotalDebits() - entries.getDetail().getTotalEntries());
+        LOG.info("Balance value: {}", (entries.getDetail().getTotalEntries() - debits.getDetail().getTotalDebits()));
+        Double balanceValue = BigDecimal.valueOf((entries.getDetail().getTotalEntries() - debits.getDetail().getTotalDebits())).setScale(2, RoundingMode.HALF_UP).doubleValue();
         balanceDTO.setDebitDetail(debits.getDetail());
         balanceDTO.setEntryDetail(entries.getDetail());
         balanceDTO.setBalanceValue(balanceValue);
@@ -62,5 +56,5 @@ public class BalanceService {
         balanceDTO.setYear(year);
         
         return balanceDTO;
-    };
+    }
 }

@@ -3,6 +3,7 @@ package com.financewebapp.api.dto;
 import com.financewebapp.api.model.Debit;
 import lombok.Data;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 import org.modelmapper.ModelMapper;
@@ -11,7 +12,8 @@ import org.modelmapper.ModelMapper;
 public class DebitDTO {
     private Long id;
     private String name;
-    private Timestamp date;
+    private Timestamp dateCreated;
+    private Date date;
     private Float value;
     private Integer month;
     private Integer year;

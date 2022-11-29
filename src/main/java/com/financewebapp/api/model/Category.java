@@ -12,6 +12,7 @@ import javax.persistence.*;
 @Data
 public class Category {
     @Id
+    @Column(name = "CategoryId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long categoryId;
 

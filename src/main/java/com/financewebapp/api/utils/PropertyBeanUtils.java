@@ -5,6 +5,7 @@ import org.apache.commons.beanutils.BeanUtilsBean;
 
 import java.lang.reflect.InvocationTargetException;
 
+
 public class PropertyBeanUtils extends BeanUtilsBean {
 
     public void compareEntry(Entry entryDB, Entry entry) throws InvocationTargetException, IllegalAccessException {
@@ -12,15 +13,15 @@ public class PropertyBeanUtils extends BeanUtilsBean {
 
         copyProperty(entryDB, "value", entry.getValue());
 
-        copyProperty(entryDB, "month", entry.getMonth());
+        copyProperty(entryDB, "dateCreated", entry.getDateCreated());
 
         copyProperty(entryDB, "year", entry.getYear());
 
         copyProperty(entryDB, "month", entry.getMonth());
 
-        copyProperty(entryDB, "authorId", entry.getAuthor());
+        copyProperty(entryDB, "author", entry.getAuthor());
 
-        copyProperty(entryDB, "categoryId", entry.getCategoryId());
+        copyProperty(entryDB, "category", entry.getCategory());
     }
 
     public void compareDebit(Debit debitDB, Debit debit) throws InvocationTargetException, IllegalAccessException {
@@ -28,7 +29,7 @@ public class PropertyBeanUtils extends BeanUtilsBean {
 
         copyProperty(debitDB, "value", debit.getValue());
 
-        copyProperty(debitDB, "month", debit.getMonth());
+        copyProperty(debitDB, "dateCreated", debit.getDateCreated());
 
         copyProperty(debitDB, "year", debit.getYear());
 
@@ -36,7 +37,7 @@ public class PropertyBeanUtils extends BeanUtilsBean {
 
         copyProperty(debitDB, "author", debit.getAuthor());
 
-        copyProperty(debitDB, "categoryId", debit.getCategoryId());
+        copyProperty(debitDB, "category", debit.getCategory());
     }
     @Override
     public void copyProperty(Object dest, String name, Object value)
