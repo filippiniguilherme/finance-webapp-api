@@ -1,6 +1,6 @@
 version: '3.3'
 services:
-  api: 
+  api:
     build: .
     restart: always
     ports:
@@ -14,14 +14,14 @@ services:
     environment:
       MYSQL_DATABASE: 'finance_webapp'
       # So you don't have to use root, but you can if you like
-      MYSQL_USER: 'api'
+      MYSQL_USER: 'root'
       # You can use whatever password you like
       MYSQL_PASSWORD: 'my-secret-pw'
       # Password for root access
       MYSQL_ROOT_PASSWORD: my-secret-pw
     ports:
       # <Port exposed> : < MySQL Port running inside container>
-      - '3333:3306'
+      - '3306:3306'
     expose:
       # Opens port 3306 on the container
       - '3306'

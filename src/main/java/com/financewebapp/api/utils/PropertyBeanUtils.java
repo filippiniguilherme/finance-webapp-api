@@ -1,10 +1,10 @@
 package com.financewebapp.api.utils;
-import com.financewebapp.api.model.Debit;
-import com.financewebapp.api.model.Entry;
+
+import com.financewebapp.api.infrastructure.model.Debit;
+import com.financewebapp.api.infrastructure.model.Entry;
 import org.apache.commons.beanutils.BeanUtilsBean;
 
 import java.lang.reflect.InvocationTargetException;
-
 
 public class PropertyBeanUtils extends BeanUtilsBean {
 
