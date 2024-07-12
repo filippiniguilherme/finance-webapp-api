@@ -1,0 +1,44 @@
+# This workflow will build a Java project with Gradle
+name: Build and Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+  actions: read
+  checks: write
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Java and Maven
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: 'temurin'
+      - name: Build the Project
+        run: mvn clean install -DskipTests
+      - name: Run Tests
+        run: mvn clean test -Pcoverage-per-test
+      - name: Upload target folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: target
+          path: |
+            ${{ github.workspace }}/target
+            ${{ github.workspace }}/reports
+      - name: Test Report
+        uses: dorny/test-reporter@v1
+        if: success() || failure()
+        with:
+          name: Test Results - Surefire
+          path: ${{ github.workspace }}/target/surefire-reports/*.xml
+          reporter: java-junit
